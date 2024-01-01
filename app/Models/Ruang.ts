@@ -16,6 +16,9 @@ export default class Ruang extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasMany (() => Storage)
+  @hasMany (() => Storage , {
+    localKey: 'id',
+    foreignKey: 'ruang_id',
+  })
   public Storages: HasMany<typeof Storage>
 }

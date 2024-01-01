@@ -9,7 +9,7 @@ import Storage from 'App/Models/Storage'
 
 export default class StoragesController {
   public async index ({response}: HttpContextContract) {
-    const items = await Storage.all()
+    const items = await Storage.query().preload('Category').preload('Ruang')
     return response.json({
       response: items,
     })
@@ -37,7 +37,7 @@ export default class StoragesController {
   }
 
   public async show ({ params,response }: HttpContextContract) {
-    const item = await Storage.find(params.id)
+    const item = await Storage.query().where('id' , params.id).preload('Category').preload('Ruang')
     return response.json({
       response: item,
     })
@@ -79,12 +79,12 @@ export default class StoragesController {
 
   public async search ({request,response}: HttpContextContract) {
     const { search } = request.body()
-    const item = await Database
+    const item = await Storage
     .query()
-    .from('storage')
-    .select('*')
     .whereLike('item_name' ,'%' + search + '%')
     .orWhereLike('item_code' ,'%' + search + '%')
+    .preload('Category')
+    .preload('Ruang')
 
     return response.json({
       response: item,

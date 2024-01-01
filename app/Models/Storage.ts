@@ -29,9 +29,15 @@ export default class Storage extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @belongsTo (() => Ruang)
+  @belongsTo (() => Ruang, {
+    localKey: 'id',
+    foreignKey: 'ruang_id',
+  })
   public Ruang: BelongsTo<typeof Ruang>
 
-  @belongsTo (() => Category)
+  @belongsTo (() => Category, {
+    localKey: 'id',
+    foreignKey: 'category_id',
+  })
   public Category: BelongsTo<typeof Category>
 }
