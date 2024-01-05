@@ -8,7 +8,7 @@ import Storage from 'App/Models/Storage'
 
 export default class StoragesController {
   public async index ({response}: HttpContextContract) {
-    const items = await Storage.query().preload('Category').preload('Ruang')
+    const items = await Storage.query().preload('Category').preload('Ruang').orderBy('updated_at','desc')
     return response.json({
       response: items,
     })
